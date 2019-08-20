@@ -3,6 +3,10 @@ import axios from "axios";
 import { Form, Field, withFormik } from "formik";
 import * as Yup from "yup";
 
+import { connect } from "react-redux";
+
+import { postData } from "../actions";
+
 const AddFriendForm = ({ errors, touched, values, handleSubmit, status }) => {
   return (
     <div className="login-form">
@@ -28,7 +32,7 @@ const AddFriendForm = ({ errors, touched, values, handleSubmit, status }) => {
 const FormikAddFriendForm = withFormik({
   mapPropsToValues({ name, age, email }) {
     return {
-      name: name|| "",
+      name: name || "",
       age: age || "",
       email: email || ""
     };
@@ -38,22 +42,20 @@ const FormikAddFriendForm = withFormik({
     name: Yup.string().required(),
     age: Yup.string().required(),
     email: Yup.string().required()
-
   }),
 
-  handleSubmit(values) {
-    axios
-      .post("http://localhost:5000/api/friends", values)
-      .then(response => {
-        console.log(response);
-        // localStorage.setItem("token", response.data.payload);
-        // localStorage.setItem("token", JSON.stringify(response.data) - if want to send entire array or object to local storage
-      })
-      .catch(error => console.log(error.response));
+  handleSubmit(values, { props, setStatus, resetForm }) {
+    // console.log('handle submit props', props)
+    // console.log('handle submit values', values)
+    props.postData(values);
+    resetForm();
   }
-})(AddFriendForm);
+})(AddFriendForm); // currying functions in Javascript
 
-export default FormikAddFriendForm;
+export default connect(
+  () => {},
+  { postData }
+)(FormikAddFriendForm);
 
 // Login Credentials = username: Lambda School, password: i<3Lambd4
 // .then console.log(response) = response.data.payload

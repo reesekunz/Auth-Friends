@@ -27,7 +27,7 @@ const initialState = {
           ...state,
           isLoading: false,
           error: "",
-          getsmurfsdata: action.payload
+          friendsdata: action.payload
         };
       case FETCHING_FRIENDS_FAILURE:
         return {
@@ -48,7 +48,7 @@ const initialState = {
           ...state,
           isSubmitting: false,
           error: "",
-          getsmurfsdata: action.payload
+          friendsdata: action.payload
         };
       case ADDING_FRIENDS_FAILURE:
         return {
