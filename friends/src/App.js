@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Login from './components/Login';
+import FormikLoginForm from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
 
 import ViewFriends from './components/ViewFriends';
@@ -19,7 +19,7 @@ function App() {
             <Link to="/viewfriends">View Private Friends</Link>
           </li>
         </ul>
-        <Route path="/login" component={Login} />
+        <Route path="/login" component={FormikLoginForm} />
         <PrivateRoute exact path="/viewfriends" component={ViewFriends} />
         {/* <PrivateRoute path="/anotherRoute" component={SomeOtherComponent} /> */}
       </div>
