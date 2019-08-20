@@ -13,7 +13,7 @@ const LoginForm = ({ errors, touched, values, handleSubmit, status }) => {
           <p className="error">{errors.username}</p>
         )}
         <Field type="password" name="password" placeholder="password" />*
-        {touched.size && errors.size && <p className="error">{errors.size}</p>}
+        {touched.password && errors.password && <p className="error">{errors.password}</p>}
         <button type="submit">Submit!</button>
       </Form>
     </div>
@@ -37,8 +37,10 @@ const FormikLoginForm = withFormik({
     axios
       .post("http://localhost:5000/api/login", values)
       .then(response => {
+          console.log(response)
         localStorage.setItem("token", response.data.payload);
         // localStorage.setItem("token", JSON.stringify(response.data) - if want to send entire array or object to local storage
+        
       })
       .catch(error => console.log(error.response));
   }

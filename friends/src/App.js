@@ -1,26 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import FormikLoginForm from './components/Login';
-import PrivateRoute from './components/PrivateRoute';
+import FormikLoginForm from "./components/Login";
+import PrivateRoute from "./components/PrivateRoute";
 
-import ViewFriends from './components/ViewFriends';
-
+import FormikAddFriendForm from "./components/AddFriends";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <ul>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/viewfriends">View Private Friends</Link>
-          </li>
-        </ul>
+        <div className="links">
+        <Link to="/login">Login</Link>
+
+        <Link to="/addfriends">Add Friend</Link>
+        </div>
         <Route path="/login" component={FormikLoginForm} />
-        <PrivateRoute exact path="/viewfriends" component={ViewFriends} />
+
+        <PrivateRoute exact path="/addfriends" component={FormikAddFriendForm} />
         {/* <PrivateRoute path="/anotherRoute" component={SomeOtherComponent} /> */}
       </div>
     </Router>
