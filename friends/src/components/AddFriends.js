@@ -3,7 +3,6 @@ import axios from "axios";
 import { Form, Field, withFormik } from "formik";
 import * as Yup from "yup";
 
-import { connect } from "react-redux";
 
 
 const AddFriendForm = ({ errors, touched, values, handleSubmit, status }) => {
@@ -43,13 +42,17 @@ const FormikAddFriendForm = withFormik({
     email: Yup.string().required()
   }),
 
-  handleSubmit(values, { props, setStatus, resetForm }) {
-    // console.log('handle submit props', props)
-    // console.log('handle submit values', values)
-    props.postData(values);
-    resetForm();
-  }
-})(AddFriendForm); // currying functions in Javascript
+  handleSubmit( event, credentials ){
+    event.preventDefault();
+    axios.post('http://localhost:5000/api/login', credentials)
+      .then(response => {
+        console.log(response);
+        localStorage.setItem('token', response.data.payload);
+        // history.push("/friendslist");
+      })
+      .catch(error => console.log(error.response));
+  },
+})(AddFriendForm);
 
 export default FormikAddFriendForm;
 // Login Credentials = username: Lambda School, password: i<3Lambd4

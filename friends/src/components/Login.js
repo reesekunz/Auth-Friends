@@ -3,8 +3,7 @@ import axios from "axios";
 import { Form, Field, withFormik } from "formik";
 import * as Yup from "yup";
 
-const LoginForm = ({ history, props}) => {
-  const [credentials, setCredentials] = useState({username: "", password: ""});
+const LoginForm = (props) => {
 
   return (
     <div className="login-form">
@@ -43,7 +42,7 @@ const FormikLoginForm = withFormik({
         localStorage.setItem('token', response.data.payload);
         // history.push("/friendslist");
       })
-      .catch(err => console.log(err.response));
+      .catch(error => console.log(error.response));
   },
 })(LoginForm);
 
