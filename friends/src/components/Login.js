@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Form, Field, withFormik } from "formik";
 import * as Yup from "yup";
 
-const LoginForm = ({ errors, touched, values, handleSubmit, status }) => {
+const LoginForm = ({ history, props}) => {
+  const [credentials, setCredentials] = useState({username: "", password: ""});
+
   return (
     <div className="login-form">
       <h1>Login</h1>
       <Form>
         <Field type="text" name="username" placeholder="username" />*
-        {touched.username && errors.username && (
-          <p className="error">{errors.username}</p>
+        {props.touched.username && props.errors.username && (
+          <p className="error">{props.errors.username}</p>
         )}
         <Field type="password" name="password" placeholder="password" />*
-        {touched.password && errors.password && <p className="error">{errors.password}</p>}
+        {props.touched.password && props.errors.password && <p className="error">{props.errors.password}</p>}
         <button type="submit">Submit!</button>
       </Form>
     </div>
@@ -33,17 +35,16 @@ const FormikLoginForm = withFormik({
     password: Yup.string().required()
   }),
 
-  handleSubmit(values, { setStatus }) {
-    axios
-      .post("http://localhost:5000/api/login", values)
+  handleSubmit( event, credentials ){
+    event.preventDefault();
+    axios.post('http://localhost:5000/api/login', credentials)
       .then(response => {
-          console.log(response)
-        localStorage.setItem("token", response.data.payload);
-        // localStorage.setItem("token", JSON.stringify(response.data) - if want to send entire array or object to local storage
-        
+        console.log(response);
+        localStorage.setItem('token', response.data.payload);
+        // history.push("/friendslist");
       })
-      .catch(error => console.log(error.response));
-  }
+      .catch(err => console.log(err.response));
+  },
 })(LoginForm);
 
 export default FormikLoginForm;

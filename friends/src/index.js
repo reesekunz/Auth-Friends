@@ -1,18 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App"
-import { createStore, applyMiddleware } from "redux";
-import thunk from 'redux-thunk';
-import { Provider } from  "react-redux";
-
-import {FriendsReducer} from "./reducers/FriendsReducer";
-
-export const store = createStore(FriendsReducer, applyMiddleware(thunk));
-
-// export const store = createStore(reducer, applyMiddleware(thunk));
+import App from "./App";
+import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
-<Provider store={store}>
-<App />
-</Provider>, document.getElementById("root"));
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("root")
+);

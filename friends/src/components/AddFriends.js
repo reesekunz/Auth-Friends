@@ -5,7 +5,6 @@ import * as Yup from "yup";
 
 import { connect } from "react-redux";
 
-import { postData } from "../actions";
 
 const AddFriendForm = ({ errors, touched, values, handleSubmit, status }) => {
   return (
@@ -52,10 +51,6 @@ const FormikAddFriendForm = withFormik({
   }
 })(AddFriendForm); // currying functions in Javascript
 
-export default connect(
-  () => {},
-  { postData }
-)(FormikAddFriendForm);
-
+export default FormikAddFriendForm;
 // Login Credentials = username: Lambda School, password: i<3Lambd4
 // .then console.log(response) = response.data.payload
