@@ -61,7 +61,7 @@ Topics:
 * Style the friends list and the input field and make everything look nice.
 * Expand the number of properties that you put on each friend object. Feel free to remove the dummy data on the server or modify it in any way.
 
-#Project Dependencies 
+#Project Dependencies Steps 
 yarn 
 yarn start 
 
@@ -69,6 +69,13 @@ yarn start
 create-react-app friends 
 cd friends
 yarn add axios react-router-dom
+yarn add formik
+yarn add yup
+yarn add react-redux redux
+npm install --save redux-thunk
+
 yarn start
+
+
 
 
