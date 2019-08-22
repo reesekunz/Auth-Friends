@@ -1,52 +1,57 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
-import { Form, Field, withFormik } from "formik";
-import * as Yup from "yup";
 
-const LoginForm = (props) => {
+class Login extends React.Component {
+  state = {
+    credentials: {
+      username: "",
+      password: ""
+    }
+  };
 
-  return (
-    <div className="login-form">
-      <h1>Login</h1>
-      <Form>
-        <Field type="text" name="username" placeholder="username" />*
-        {props.touched.username && props.errors.username && (
-          <p className="error">{props.errors.username}</p>
-        )}
-        <Field type="password" name="password" placeholder="password" />*
-        {props.touched.password && props.errors.password && <p className="error">{props.errors.password}</p>}
-        <button type="submit">Submit!</button>
-      </Form>
-    </div>
-  );
-};
+  handleChange = event => {
+    this.setState({
+      credentials: {
+        ...this.state.credentials,
+        [event.target.name]: event.target.value
+      }
+    });
+  };
 
-const FormikLoginForm = withFormik({
-  mapPropsToValues({ username, password }) {
-    return {
-      username: username || "",
-      password: password || ""
-    };
-  },
-
-  validationSchema: Yup.object().shape({
-    username: Yup.string().required(),
-    password: Yup.string().required()
-  }),
-
-  handleSubmit( event, credentials ){
+  handleSubmit = event => {
     event.preventDefault();
-    axios.post('http://localhost:5000/api/login', credentials)
+    axios
+      .post("http://localhost:5000/api/login", this.state.credentials)
       .then(response => {
-        console.log(response);
-        localStorage.setItem('token', response.data.payload);
-        // history.push("/friendslist");
+        localStorage.setItem("token", response.data.payload);
       })
       .catch(error => console.log(error.response));
-  },
-})(LoginForm);
+  };
 
-export default FormikLoginForm;
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            name="username"
+            value={this.state.credentials.username}
+            onChange={this.handleChange}
+          />
+          <input
+            type="password"
+            name="password"
+            value={this.state.credentials.password}
+            onChange={this.handleChange}
+          />
+          <button>Log in</button>
+        </form>
+      </div>
+    );
+  }
+}
 
-// Login Credentials = username: Lambda School, password: i<3Lambd4
+export default Login;
+
+// Login Credentials = username: reese, password: reese
 // .then console.log(response) = response.data.payload
